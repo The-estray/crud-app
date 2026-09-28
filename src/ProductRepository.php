@@ -1,6 +1,6 @@
 <?php
 
-class PostRepository
+class ProductRepository
 {
     private PDO $pdo;
 
@@ -13,5 +13,11 @@ class PostRepository
     {
         $stmt = $this->pdo->prepare("INSERT INTO products (title, price, description) VALUES (?,?,?)");
         $stmt->execute([$title, $price, $description]);
+    }
+
+    public function getAll(): array
+    {
+        $stmt = $this->pdo->query("SELECT * FROM products ORDER BY id DESC");
+        return $stmt->fetchAll();
     }
 }
