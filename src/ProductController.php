@@ -2,17 +2,23 @@
 
 class ProductController
 {
-    private PDO $pdo;
+    private ProductRepository $productRepo;
 
-    public function __construct(PDO $pdo)
+    public function __construct(ProductRepository $productRepo)
     {
-        $this->pdo = $pdo;
+        $this->productRepo = $productRepo;
     }
 
-    public function index(ProductRepository $productRepo): void
+    public function view(): void
+    {
+        require_once __DIR__ . '/../public/view/products.php';
+        exit;
+    }
+
+    public function index(): void
     {
         header('Content-Type: application/json');
-        $products = $productRepo->getAll();
+        $products = $this->productRepo->getAll();
         echo json_encode($products);
         exit;
     }
