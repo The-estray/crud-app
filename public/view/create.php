@@ -232,7 +232,7 @@
         </form>
     </main>
 
-    <script src="../js/script.js"></script>
+    <script src="/public/create.js"></script>
 </body>
 
 </html>

@@ -15,6 +15,12 @@ class ProductController
         exit;
     }
 
+    public function createView(): void
+    {
+        require_once __DIR__ . '/../public/view/create.php';
+        exit;
+    }
+
     public function index(): void
     {
         header('Content-Type: application/json');

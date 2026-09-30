@@ -174,7 +174,7 @@
                 <h1>Products</h1>
                 <p>Manage your inventory and catalog items.</p>
             </div>
-            <a href="view/create.php" class="btn-create">
+            <a href="/public/view/create.php" class="btn-create">
                 + New product
             </a>
         </header>
@@ -197,7 +197,7 @@
     </main>
 
     <!-- Твой скрипт для fetch запроса списка -->
-    <script src="/public/script.js"></script>
+    <script src="/public/readAll.js"></script>
 </body>
 
 </html>
