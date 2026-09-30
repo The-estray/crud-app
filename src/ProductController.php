@@ -22,4 +22,25 @@ class ProductController
         echo json_encode($products);
         exit;
     }
+
+    public function store(): void
+    {
+        $raw = file_get_contents('php://input');
+        $data = json_decode($raw, true);
+
+        if (empty($data['title']) || empty($data['price'])) {
+            http_response_code(422);
+            echo json_encode(['error' => 'Заполните данные']);
+            exit;
+        }
+
+        $title = trim($data['title']);
+        $price = trim($data['price']);
+        $description = trim($data['description'] ?? '');
+
+        $this->productRepo->create($title, $price, $description);
+        http_response_code(201);
+        echo json_encode(['status' => 'success']);
+        exit;
+    }
 }

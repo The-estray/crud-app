@@ -9,7 +9,7 @@ class ProductRepository
         $this->pdo = $pdo;
     }
 
-    public function create(string $title, string $price, string $description): void
+    public function create(string $title, float $price, string $description): void
     {
         $stmt = $this->pdo->prepare("INSERT INTO products (title, price, description) VALUES (?,?,?)");
         $stmt->execute([$title, $price, $description]);
