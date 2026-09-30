@@ -26,4 +26,10 @@ class ProductRepository
         $stmt = $this->pdo->prepare("UPDATE products SET deleted_at = NOW() WHERE id = ?");
         return $stmt->execute([$id]);
     }
+
+    public function update(string $title, float $price, string $description, int $id): void
+    {
+        $stmt = $this->pdo->prepare("UPDATE products SET title = ?, price = ?, description = ? WHERE id = ?");
+        $stmt->execute([$title, $price, $description, $id]);
+    }
 }

@@ -14,7 +14,7 @@ async function getProducts() {
           </div>
           <p class="product-desc">${item.description || "No description"}</p>
           <div class="product-actions">
-              <a href="/public/view/edit.php?id=${item.id}" class="action-link">Edit</a>
+              <a href="/public/view/update.php?id=${item.id}" class="action-link">Edit</a>
               <button class="action-link delete" onclick="deleteProduct(${item.id})">Delete</button>
           </div>
       </article>
