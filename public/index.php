@@ -9,5 +9,6 @@ Router::get('/public/create', [$productController, 'createView']);
 
 Router::get('/public/products', [$productController, 'index']);
 Router::post('/public/products', [$productController, 'store']);
+Router::post('/public/products/delete', [$productController, 'destroy']);
 
 Router::dispatch($uri, $method);

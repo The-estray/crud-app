@@ -226,7 +226,7 @@
             </div>
 
             <div class="actions">
-                <a href="../index.php" class="back-link">Cancel</a>
+                <a href="/public/" class="back-link">Cancel</a>
                 <button type="submit" id="submitBtn">Create product</button>
             </div>
         </form>

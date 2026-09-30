@@ -49,4 +49,20 @@ class ProductController
         echo json_encode(['status' => 'success']);
         exit;
     }
+
+    public function destroy(): void
+    {
+        $id = isset($_GET['id']) ? $_GET['id']: 0;
+
+        if ($id === 0) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Invalid ID']);
+            exit;
+        }
+
+        $this->productRepo->delete($id);
+        http_response_code(200);
+        echo json_encode(['status' => 'success']);
+        exit;
+    }
 }

@@ -17,7 +17,13 @@ class ProductRepository
 
     public function getAll(): array
     {
-        $stmt = $this->pdo->query("SELECT * FROM products ORDER BY id DESC");
+        $stmt = $this->pdo->query("SELECT * FROM products WHERE deleted_at IS NULL ORDER BY id DESC");
         return $stmt->fetchAll();
+    }
+
+    public function delete(int $id): bool
+    {
+        $stmt = $this->pdo->prepare("UPDATE products SET deleted_at = NOW() WHERE id = ?");
+        return $stmt->execute([$id]);
     }
 }
