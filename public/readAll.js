@@ -9,7 +9,11 @@ async function getProducts() {
     container.innerHTML += `
       <article class="product-card">
           <div class="product-header">
-              <h2 class="product-title">${item.title}</h2>
+              <h2 class="product-title">
+                  <a href="/public/show?id=${item.id}" style="text-decoration:none; color:inherit;">
+                      ${item.title}
+                  </a>
+              </h2>
               <span class="product-price">$${parseFloat(item.price).toFixed(2)}</span>
           </div>
           <p class="product-desc">${item.description || "No description"}</p>

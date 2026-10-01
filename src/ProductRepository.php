@@ -32,4 +32,12 @@ class ProductRepository
         $stmt = $this->pdo->prepare("UPDATE products SET title = ?, price = ?, description = ? WHERE id = ?");
         $stmt->execute([$title, $price, $description, $id]);
     }
+
+    public function getById(int $id): ?array
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM products WHERE deleted_at IS NULL AND id = ? LIMIT 1");
+        $stmt->execute([$id]);
+        $product = $stmt->fetch();
+        return $product ?: null;
+    }
 }

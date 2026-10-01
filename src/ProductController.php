@@ -41,7 +41,7 @@ class ProductController
         }
 
         $title = trim($data['title']);
-        $price = trim($data['price']);
+        $price = (float)$data['price'];
         $description = trim($data['description'] ?? '');
 
         $this->productRepo->create($title, $price, $description);
@@ -52,9 +52,9 @@ class ProductController
 
     public function destroy(): void
     {
-        $id = isset($_GET['id']) ? $_GET['id'] : 0;
+        $id = filter_var($_GET['id'] ?? null, FILTER_VALIDATE_INT);
 
-        if ($id === 0) {
+        if (!$id || $id <= 0) {
             http_response_code(400);
             echo json_encode(['error' => 'Invalid ID']);
             exit;
@@ -70,27 +70,58 @@ class ProductController
     {
         $raw = file_get_contents('php://input');
         $data = json_decode($raw, true);
-        $id = isset($_GET['id']) ? $_GET['id'] : 0;
+
+        $id = filter_var($_GET['id'] ?? null, FILTER_VALIDATE_INT);
+
+        if (!$id || $id <= 0) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Invalid ID']);
+            exit;
+        }
 
         if (empty($data['title']) || empty($data['price'])) {
             http_response_code(422);
             echo json_encode(['error' => 'Заполните данные']);
             exit;
         }
+        $title = trim($data['title']);
+        $price = (float)$data['price'];
+        $description = trim($data['description'] ?? '');
 
-        if ($id === 0) {
+        $this->productRepo->update($title, $price, $description, $id);
+        http_response_code(200);
+        echo json_encode(['status' => 'success']);
+        exit;
+    }
+
+    public function show(): void
+    {
+        header('Content-Type: application/json');
+
+        $id = filter_var($_GET['id'] ?? null, FILTER_VALIDATE_INT);
+
+        if (!$id || $id <= 0) {
             http_response_code(400);
             echo json_encode(['error' => 'Invalid ID']);
             exit;
         }
 
-        $title = trim($data['title']);
-        $price = trim($data['price']);
-        $description = trim($data['description'] ?? '');
+        $product = $this->productRepo->getById($id);
 
-        $this->productRepo->update($title, $price, $description, $id);
-        http_response_code(201);
-        echo json_encode(['status' => 'success']);
+        if (!$product) {
+            http_response_code(404);
+            echo json_encode(['error' => 'Product not found']);
+            exit;
+        }
+
+        http_response_code(200);
+        echo json_encode($product);
+        exit;
+    }
+
+    public function showView(): void
+    {
+        require_once __DIR__ . '/../public/view/show.php';
         exit;
     }
 }
